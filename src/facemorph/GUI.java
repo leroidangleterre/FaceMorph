@@ -2,6 +2,9 @@ package facemorph;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -40,6 +43,14 @@ public class GUI extends JFrame {
         add(split);
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
+
+        // The split shall remain centered.
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                split.setDividerLocation(0.5);
+            }
+        });
         setVisible(true);
     }
 
@@ -55,6 +66,13 @@ public class GUI extends JFrame {
         loadMenu.add(loadRight);
 
         JMenu saveMenu = new JMenu("Save");
+        JMenuItem saveLeft = new JMenuItem("Left image");
+        saveLeft.addActionListener(new ImageSaver(leftPanel));
+        saveMenu.add(saveLeft);
+        JMenuItem saveRight = new JMenuItem("Right image");
+        saveRight.addActionListener(new ImageSaver(rightPanel));
+        saveMenu.add(saveRight);
+
         JMenu transformMenu = new JMenu("Transform");
 
         menubar.add(loadMenu);
