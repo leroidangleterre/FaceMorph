@@ -29,6 +29,7 @@ public class ImageLoader implements ActionListener {
             File chosenFile = chooser.getSelectedFile();
             panel.loadImage(chosenFile);
         }
+        panel.repaint();
     }
 
 }
